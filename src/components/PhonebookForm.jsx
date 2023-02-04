@@ -1,72 +1,59 @@
-import { Component } from 'react';
+import { useState } from 'react';
+import initialState from './shared/initialState';
 import css from './style.module.css';
 import PropTypes from 'prop-types';
 
-class PhonebookForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
+const PhonebookForm = ({ onSubmit }) => {
+  const [state, setState] = useState({ ...initialState });
 
-  handleSubmit = evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
 
-    const { onSubmit } = this.props;
-    const result = onSubmit({ ...this.state });
-    if (result) {
-      return this.reset();
-    }
-    return this.reset('', this.state.number);
+    onSubmit({ name, number });
+    setState({ ...initialState });
   };
 
-  reset(name = '', number = '') {
-    this.setState({ name: name, number: number });
-  }
-
-  handleInput = ({ target }) => {
+  const handleInput = ({ target }) => {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
+    setState(prevState => {
+      return { ...prevState, [name]: value };
     });
   };
 
-  render() {
-    const { name, number } = this.state;
-    const { handleSubmit, handleInput } = this;
+  const { name, number } = state;
 
-    return (
-      <form className={css.form} onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          value={name}
-          onChange={handleInput}
-          className={css.input}
-          type="text"
-          name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
+  return (
+    <form className={css.form} onSubmit={handleSubmit}>
+      <label htmlFor="name">Name</label>
+      <input
+        value={name}
+        onChange={handleInput}
+        className={css.input}
+        type="text"
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+      />
 
-        <label htmlFor="number">Number</label>
-        <input
-          value={number}
-          onChange={handleInput}
-          className={css.input}
-          type="tel"
-          name="number"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        />
+      <label htmlFor="number">Number</label>
+      <input
+        value={number}
+        onChange={handleInput}
+        className={css.input}
+        type="tel"
+        name="number"
+        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+        required
+      />
 
-        <button className={css.btn} type="submit">
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+      <button className={css.btn} type="submit">
+        Add contact
+      </button>
+    </form>
+  );
+};
 
 export default PhonebookForm;
 
