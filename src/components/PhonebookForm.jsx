@@ -9,8 +9,12 @@ const PhonebookForm = ({ onSubmit }) => {
   const handleSubmit = evt => {
     evt.preventDefault();
 
-    onSubmit({ name, number });
-    setState({ ...initialState });
+    const result = onSubmit({ name, number });
+
+    if (result === false) {
+      return setState({ name: '', number: number });
+    }
+    return setState({ ...initialState });
   };
 
   const handleInput = ({ target }) => {

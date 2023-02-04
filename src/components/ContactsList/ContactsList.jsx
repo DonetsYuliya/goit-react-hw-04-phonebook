@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import ContactsListItem from './ContactsListItem';
 
-const ContactItem = ({ contacts, removeContact }) => {
+const ContactsList = ({ contact, removeContact }) => {
   return (
     <ul>
-      {contacts.map(({ id, name, number }) => {
+      {contact.map(({ id, name, number }) => {
         return (
           <ContactsListItem
             key={id}
@@ -19,13 +19,13 @@ const ContactItem = ({ contacts, removeContact }) => {
   );
 };
 
-export default ContactItem;
+export default ContactsList;
 
-ContactItem.defaultProps = {
+ContactsList.defaultProps = {
   contacts: [],
 };
 
-ContactItem.propTypes = {
+ContactsList.propTypes = {
   removeContact: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
