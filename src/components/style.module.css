@@ -1,0 +1,34 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  padding: 10px;
+  width: 350px;
+  border: 1px solid black;
+}
+
+.title {
+  margin-left: 40px;
+}
+
+.input {
+  width: 150px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.btn {
+  width: 150px;
+  cursor: pointer;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+}
+
+.item {
+  margin-bottom: 25px;
+  margin-left: 40px;
+}
