@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import initialState from './shared/initialState';
 import css from './style.module.css';
 import PropTypes from 'prop-types';
 
 const PhonebookForm = ({ onSubmit }) => {
-  const [state, setState] = useState({ ...initialState });
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -12,19 +12,20 @@ const PhonebookForm = ({ onSubmit }) => {
     const result = onSubmit({ name, number });
 
     if (result === false) {
-      return setState({ name: '', number: number });
+      return setName('');
     }
-    return setState({ ...initialState });
+    setName('');
+    setNumber('');
   };
 
   const handleInput = ({ target }) => {
-    const { name, value } = target;
-    setState(prevState => {
-      return { ...prevState, [name]: value };
-    });
-  };
+    const { value } = target;
 
-  const { name, number } = state;
+    if (target.name === 'name') {
+      return setName(value);
+    }
+    setNumber(value);
+  };
 
   return (
     <form className={css.form} onSubmit={handleSubmit}>
